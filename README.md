@@ -1,25 +1,45 @@
+# Legendary Locator
 
-Installation information
-=======
+A server-side Pixelmon mod that broadcasts legendary Pokémon spawns in chat with a clickable teleport link.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+## Features
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+- **Legendary Spawn Alerts** — Broadcasts a message to all players when a legendary Pokémon spawns
+- **Raid Den Detection** — Detects legendary Pokémon in raid dens and announces them
+- **Click-to-Teleport** — Messages are clickable! Simply click the chat message to teleport directly to the legendary
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## Requirements
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+- Minecraft **1.21.1**
+- NeoForge **21.1+**
+- Pixelmon **9.3.9+**
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+## Installation
+
+1. Download the latest `legendarylocator-x.x.x.jar` from releases
+2. Place the jar in your server's `mods` folder
+3. Start/restart your server
+
+> **Note:** This is a server-side only mod. Players do not need to install anything.
+
+## How It Works
+
+When a legendary Pokémon spawns (either in the wild or at a raid den), all players receive a chat message:
+
+```
+[LegendaryLocator] Mewtwo spawned at x:123, y:64, z:-456! Click to teleport
+```
+
+Clicking the message runs `/tp @s <x> <y> <z>` to teleport you directly to the legendary.
+
+## Permissions
+
+Players need permission to use `/tp` for the click-to-teleport feature to work.
+
+## License
+
+All Rights Reserved
+
+## Author
+
+**Skyzap**
