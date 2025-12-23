@@ -13,7 +13,8 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = mod_version
+// Version can be overridden via -Pversion=x.x.x or from environment
+version = project.findProperty('modVersion') ?: System.getenv('MOD_VERSION') ?: '1.0.0'
 group = mod_group_id
 
 repositories {
