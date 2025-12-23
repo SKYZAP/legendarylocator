@@ -22,12 +22,14 @@ public class PixelmonListener {
 
     @SubscribeEvent
     public static void onRaidRandomized(RandomizeRaidEvent.ChooseStarLevel event) {
-        if (event.isCanceled()) return;
+        if (event.isCanceled())
+            return;
 
         DenEntity den = event.getDen();
         var level = den.level();
 
-        if (!(level instanceof ServerLevel serverLevel)) return;
+        if (!(level instanceof ServerLevel serverLevel))
+            return;
 
         scheduler.schedule(() -> {
             serverLevel.getServer().execute(() -> {
@@ -40,7 +42,8 @@ public class PixelmonListener {
         den.getData().ifPresent(raidData -> {
             Pokemon pokemon = raidData.getPokemon();
 
-            if (pokemon == null || !pokemon.isLegendary()) return;
+            if (pokemon == null || !pokemon.isLegendary())
+                return;
 
             BlockPos pos = den.blockPosition();
             UUID pokemonUUID = pokemon.getUUID();
@@ -57,22 +60,25 @@ public class PixelmonListener {
                     pokemon.getSpecies().getName(),
                     pos.getX(),
                     pos.getY(),
-                    pos.getZ()
-            );
+                    pos.getZ());
         });
     }
+
     @SubscribeEvent
     public static void onLegendarySpawn(LegendarySpawnEvent.DoSpawn event) {
-        if (event.isCanceled()) return;
+        if (event.isCanceled())
+            return;
 
         var legendarySpawnLocation = event.action.spawnLocation;
         var legendaryEntity = event.getLegendary();
 
-        if (legendaryEntity == null) return;
+        if (legendaryEntity == null)
+            return;
 
         BlockPos pos = legendarySpawnLocation.location.pos;
         var level = legendarySpawnLocation.location.world;
-        if (!(level instanceof ServerLevel serverLevel)) return;
+        if (!(level instanceof ServerLevel serverLevel))
+            return;
 
         serverLevel.getServer().execute(() -> {
             broadcastLegendary(
@@ -80,22 +86,23 @@ public class PixelmonListener {
                     legendaryEntity.getName(),
                     pos.getX(),
                     pos.getY(),
-                    pos.getZ()
-            );
+                    pos.getZ());
         });
     }
 
     private static void broadcastLegendary(ServerLevel level, String species, int x, int y, int z) {
-        String messageText = String.format("§f[§6LegendaryLocator§f] §e%s §aspawned at x:%s, y:%s, z:%s! §bClick to teleport", species, x, y, z);
+        String dimension = level.dimension().location().toString();
+        String dimensionDisplay = formatDimensionName(dimension);
+
+        String messageText = String.format(
+                "§f[§6LegendaryLocator§f] §e%s §aspawned at x:%d, y:%d, z:%d%s! §bClick to teleport",
+                species, x, y, z, dimensionDisplay);
+
+        String command = String.format("/execute in %s run tp @s %d %d %d", dimension, x, y, z);
 
         Component message = Component.literal(messageText)
                 .withStyle(style -> style.withClickEvent(
-                        new ClickEvent(
-                                ClickEvent.Action.RUN_COMMAND,
-                                "/tp @s " + x + " " + y + " " + z
-                        )
-                )
-        );
+                        new ClickEvent(ClickEvent.Action.RUN_COMMAND, command)));
 
         level.getServer()
                 .getPlayerList()
@@ -103,5 +110,13 @@ public class PixelmonListener {
                 .forEach(player -> player.sendSystemMessage(message, false));
     }
 
-
+    private static String formatDimensionName(String dimension) {
+        return switch (dimension) {
+            case "minecraft:overworld" -> "";
+            case "minecraft:the_nether" -> " §7in the Nether";
+            case "minecraft:the_end" -> " §7in the End";
+            case "pixelmon:ultra_space" -> " §din Ultra Space";
+            default -> " §7in " + dimension;
+        };
+    }
 }
