@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="[4.0,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="legendarylocator"
+version="1.0.0"
+displayName="Legendary Locator"
+authors="Skyzap"
+description='''Server-side Pixelmon legendary locator'''
+side="SERVER"
+
+[[dependencies.legendarylocator]]
+modId="neoforge"
+type="required"
+versionRange="[8.0,)"
+ordering="NONE"
+side="SERVER"
+
+[[dependencies.legendarylocator]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,)"
+ordering="NONE"
+side="SERVER"
+
+[[dependencies.legendarylocator]]
+modId="pixelmon"
+mandatory=true
+versionRange="[9.3.9,)"
+ordering="AFTER"
+side="SERVER"

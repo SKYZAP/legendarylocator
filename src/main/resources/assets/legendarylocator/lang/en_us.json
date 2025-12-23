@@ -1,0 +1,13 @@
+{
+  "itemGroup.legendarylocator": "Example Mod Tab",
+  "block.legendarylocator.example_block": "Example Block",
+  "item.legendarylocator.example_item": "Example Item",
+
+  "legendarylocator.configuration.title": "LegendaryLocator Configs",
+  "legendarylocator.configuration.section.legendarylocator.common.toml": "LegendaryLocator Configs",
+  "legendarylocator.configuration.section.legendarylocator.common.toml.title": "LegendaryLocator Configs",
+  "legendarylocator.configuration.items": "Item List",
+  "legendarylocator.configuration.logDirtBlock": "Log Dirt Block",
+  "legendarylocator.configuration.magicNumberIntroduction": "Magic Number Text",
+  "legendarylocator.configuration.magicNumber": "Magic Number"
+}
