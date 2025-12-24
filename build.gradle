@@ -101,6 +101,10 @@ dependencies {
 
     compileOnly files("libs/Pixelmon-${minecraft_version}-${pixelmon_version}-server.jar")
 
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"

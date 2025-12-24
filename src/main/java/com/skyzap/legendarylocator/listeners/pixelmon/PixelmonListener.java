@@ -4,11 +4,14 @@ import com.pixelmonmod.pixelmon.api.events.raids.RandomizeRaidEvent;
 import com.pixelmonmod.pixelmon.api.events.spawning.LegendarySpawnEvent;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.entities.DenEntity;
+import com.skyzap.legendarylocator.util.MinecraftUtils;
+import lombok.experimental.UtilityClass;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.SubscribeEvent;
+
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,6 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@UtilityClass
 public class PixelmonListener {
     private static final Map<BlockPos, UUID> announcedDens = new ConcurrentHashMap<>();
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -92,13 +96,14 @@ public class PixelmonListener {
 
     private static void broadcastLegendary(ServerLevel level, String species, int x, int y, int z) {
         String dimension = level.dimension().location().toString();
-        String dimensionDisplay = formatDimensionName(dimension);
+        String dimensionDisplay = MinecraftUtils.formatDimensionName(dimension);
 
         String messageText = String.format(
                 "§f[§6LegendaryLocator§f] §e%s §aspawned at x:%d, y:%d, z:%d%s! §bClick to teleport",
                 species, x, y, z, dimensionDisplay);
 
-        String command = String.format("/execute in %s run tp @s %d %d %d", dimension, x, y, z);
+        // Use custom /lltp command that uses ServerPlayer.teleportTo() API
+        String command = String.format("/lltp %s %d %d %d", dimension, x, y, z);
 
         Component message = Component.literal(messageText)
                 .withStyle(style -> style.withClickEvent(
@@ -108,15 +113,5 @@ public class PixelmonListener {
                 .getPlayerList()
                 .getPlayers()
                 .forEach(player -> player.sendSystemMessage(message, false));
-    }
-
-    private static String formatDimensionName(String dimension) {
-        return switch (dimension) {
-            case "minecraft:overworld" -> "";
-            case "minecraft:the_nether" -> " §7in the Nether";
-            case "minecraft:the_end" -> " §7in the End";
-            case "pixelmon:ultra_space" -> " §din Ultra Space";
-            default -> " §7in " + dimension;
-        };
     }
 }
