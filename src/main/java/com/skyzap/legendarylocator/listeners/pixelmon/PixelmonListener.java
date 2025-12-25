@@ -102,8 +102,8 @@ public class PixelmonListener {
                 "§f[§6LegendaryLocator§f] §e%s §aspawned at x:%d, y:%d, z:%d%s! §bClick to teleport",
                 species, x, y, z, dimensionDisplay);
 
-        // Use custom /lltp command that uses ServerPlayer.teleportTo() API
-        String command = String.format("/lltp %s %d %d %d", dimension, x, y, z);
+        // Use /execute in <dimension> run tp for cross-dimension teleportation
+        String command = String.format("/execute in %s run tp @s %d %d %d", dimension, x, y, z);
 
         Component message = Component.literal(messageText)
                 .withStyle(style -> style.withClickEvent(
