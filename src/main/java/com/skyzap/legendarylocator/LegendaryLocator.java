@@ -2,7 +2,6 @@ package com.skyzap.legendarylocator;
 
 import com.mojang.logging.LogUtils;
 import com.pixelmonmod.pixelmon.Pixelmon;
-import com.skyzap.legendarylocator.commands.TeleportCommand;
 import com.skyzap.legendarylocator.listeners.pixelmon.PixelmonListener;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -12,7 +11,6 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
 
@@ -33,12 +31,6 @@ public class LegendaryLocator {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         LOGGER.info("[{}] Pixelmon Legendary Locator loaded", MODID);
-    }
-
-    @SubscribeEvent
-    public void onRegisterCommands(RegisterCommandsEvent event) {
-        TeleportCommand.register(event.getDispatcher());
-        LOGGER.info("[{}] Registered /lltp command", MODID);
     }
 
     @SubscribeEvent
